@@ -35,6 +35,24 @@ socket.on('refresh:all', () => {
 });
 
 socket.on('refresh:out', () => {
-  console.log('Need TGA refresh');
   refreshTga();
+});
+
+let stderr = '';
+let stdout = '';
+socket.on('compile:start', () => {
+  console.log('Compilation start');
+  stderr = '';
+  stdout = '';
+});
+socket.on('compile:stdout', (data) => {
+  stdout += data;
+});
+socket.on('compile:stderr', (data) => {
+  stderr += data;
+});
+socket.on('compile:end', () => {
+  stdout && console.log(stdout);
+  stderr && console.warn(stderr);
+  stderr = stdout = '';
 });

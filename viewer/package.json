@@ -10,6 +10,7 @@
   "dependencies": {
     "chokidar": "^3.4.2",
     "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "which": "^2.0.2"
   }
 }

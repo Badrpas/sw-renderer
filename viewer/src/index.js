@@ -7,6 +7,8 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
+require('./c-watch')(io);
+
 const clients = new Set();
 
 io.on('connection', socket => {
