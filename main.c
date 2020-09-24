@@ -21,6 +21,20 @@ int main() {
   line(500, 1, 500, 500, 0x00FF00);
   line(500, 1, 1, 500, 0xFF0000);
 
+  struct obj* obj = read_obj("../obj/head.obj");
+  printf("\n\n\n========\n\n\n");
+  float m = 10000.0f;
+  for (int j = 0; j < obj->vertex_count; ++j) {
+    UINT32 pos = j * 3;
+
+    unsigned int x = (UINT32) (obj->vertices[pos + 1] * m);
+    unsigned int y = (UINT32) (obj->vertices[pos + 2] * m);
+
+//    printf("%d %d %f %f\n", x, y, obj->vertices[pos], obj->vertices[pos+1]);
+
+    setPixel(x, y, 0xFF0000);
+  }
+
   fwrite(rawData, PIXEL_SIZE, PIXEL_COUNT, file);
 
   fclose(file);
@@ -28,7 +42,7 @@ int main() {
   return 0;
 }
 
-void setPixel(UINT x, UINT y, UINT color) {
+void setPixel(UINT32 x, UINT32 y, UINT32 color) {
   if (x > WIDTH || y > HEIGHT) return;
   rawData[x * PIXEL_SIZE + 0 + y * WIDTH * PIXEL_SIZE] = 0xFF & (color);
   rawData[x * PIXEL_SIZE + 1 + y * WIDTH * PIXEL_SIZE] = 0xFF & (color >> 8);
