@@ -38,21 +38,25 @@ socket.on('refresh:out', () => {
   refreshTga();
 });
 
-let stderr = '';
-let stdout = '';
-socket.on('compile:start', () => {
-  console.log('Compilation start');
-  stderr = '';
-  stdout = '';
-});
-socket.on('compile:stdout', (data) => {
-  stdout += data;
-});
-socket.on('compile:stderr', (data) => {
-  stderr += data;
-});
-socket.on('compile:end', () => {
-  stdout && console.log(stdout);
-  stderr && console.warn(stderr);
-  stderr = stdout = '';
-});
+function proc(name) {
+  let stderr = '';
+  let stdout = '';
+  socket.on(name + ':start', () => {
+    console.log(name + ' start');
+    stderr = '';
+    stdout = '';
+  });
+  socket.on(name + ':stdout', (data) => {
+    stdout += data;
+  });
+  socket.on(name + ':stderr', (data) => {
+    stderr += data;
+  });
+  socket.on(name + ':end', () => {
+    stdout && console.log(stdout);
+    stderr && console.warn(stderr);
+    stderr = stdout = '';
+  });
+}
+proc('compile');
+proc('run');
