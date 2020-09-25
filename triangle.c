@@ -1,27 +1,15 @@
 #include "defines.h"
 
 void triangle(Vec* v1, Vec* v2, Vec* v3, UINT32 color) {
+  Vec* v[3] = { v1, v2, v3 };
 
-
-  line(
-      to_screen_x(v1->x),
-      to_screen_y(-v1->y),
-      to_screen_x(v2->x),
-      to_screen_y(-v2->y),
-      color
-  );
-  line(
-      to_screen_x(v2->x),
-      to_screen_y(-v2->y),
-      to_screen_x(v3->x),
-      to_screen_y(-v3->y),
-      color
-  );
-  line(
-      to_screen_x(v3->x),
-      to_screen_y(-v3->y),
-      to_screen_x(v1->x),
-      to_screen_y(-v1->y),
-      color
-  );
+  for (int i = 0; i < 3; ++i) {
+    line(
+        to_screen_x(v[i]->x),
+        to_screen_y(-v[i]->y),
+        to_screen_x(v[(i + 1) % 3]->x),
+        to_screen_y(-v[(i + 1) % 3]->y),
+        color
+    );
+  }
 }
