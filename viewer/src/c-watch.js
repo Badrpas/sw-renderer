@@ -91,6 +91,8 @@ module.exports = async io => {
     await compile(io);
     await run(io);
 
+    io.emit('refresh:out');
+
     inProgress = false;
   });
 }
