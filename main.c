@@ -12,6 +12,10 @@ double* get_vertex(struct obj* obj, UINT32 idx) {
   return obj->vertices + ((idx - 1) * 3);
 }
 
+Vec* get_vec(struct obj* obj, UINT32 idx) {
+  return (Vec*)get_vertex(obj, idx);
+}
+
 UINT32 to_screen_x(double x) {
   return HALF_WIDTH + (SINT32) ((x) * (double) HALF_WIDTH);
 }
@@ -77,15 +81,22 @@ int main() {
         get_vertex(obj, idx3)
     };
 
-    for (int i = 0; i < 3; ++i) {
-      line(
-          to_screen_x(v[i][Xidx]),
-          to_screen_y(-v[i][Yidx]),
-          to_screen_x(v[(i + 1) % 3][Xidx]),
-          to_screen_y(-v[(i + 1) % 3][Yidx]),
-          0xFF00FF
-      );
-    }
+    triangle(
+        get_vec(obj, idx1),
+        get_vec(obj, idx2),
+        get_vec(obj, idx3),
+        0x00FFFF
+    );
+
+//    for (int i = 0; i < 3; ++i) {
+//      line(
+//          to_screen_x(v[i][Xidx]),
+//          to_screen_y(-v[i][Yidx]),
+//          to_screen_x(v[(i + 1) % 3][Xidx]),
+//          to_screen_y(-v[(i + 1) % 3][Yidx]),
+//          0xFF00FF
+//      );
+//    }
   }
 
   fwrite(rawData, PIXEL_SIZE, PIXEL_COUNT, file);

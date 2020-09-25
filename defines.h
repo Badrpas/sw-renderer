@@ -19,9 +19,18 @@
 
 #define HEADER_SIZE 18
 
+typedef struct Vec {
+  double x;
+  double y;
+  double z;
+} Vec;
+
+UINT32 to_screen_x(double x);
+UINT32 to_screen_y(double y);
 
 void setPixel(UINT32, UINT32, UINT32);
 void line(UINT32, UINT32, UINT32, UINT32, UINT32);
+void triangle(Vec*, Vec*, Vec*, UINT32);
 
 struct obj;
 
