@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "defines.h"
 #include <math.h>
 
@@ -50,24 +49,6 @@ int main() {
     if (kek--) printf("%f, %f, %f\n", v[Xidx], v[Yidx], v[Zidx]);
   }
 
-//  for (int j = 0; j < 360; ++j) {
-//    UINT32 color = 0;
-//    switch (j / (360 / 4)) {
-//      case 0:color = 0xFF0000;
-//        break;
-//      case 1:color = 0xFF00FF;
-//        break;
-//      case 2:color = 0x0000FF;
-//        break;
-//      case 3:color = 0x00FFFF;
-//        break;
-//      default:color = 0xFFFF00;
-//    }
-//    SINT32 x = cos(2 * PI * j / 360.0) * 270.0 + HALF_WIDTH;
-//    SINT32 y = sin(2 * PI * j / 360.0) * 270.0 + HALF_HEIGHT;
-//    line(HALF_WIDTH, HALF_HEIGHT, x, y, color);
-//  }
-
   for (int j = 0; j < obj->face_count; ++j) {
     UINT32 face_idx = j * 3 * 3;
 
@@ -75,28 +56,12 @@ int main() {
     UINT16 idx2 = obj->faces[face_idx + 3];
     UINT16 idx3 = obj->faces[face_idx + 6];
 
-    double* v[3] = {
-        get_vertex(obj, idx1),
-        get_vertex(obj, idx2),
-        get_vertex(obj, idx3)
-    };
-
-    triangle(
+    triangle_v(
         get_vec(obj, idx1),
         get_vec(obj, idx2),
         get_vec(obj, idx3),
         0x00FFFF
     );
-
-//    for (int i = 0; i < 3; ++i) {
-//      line(
-//          to_screen_x(v[i][Xidx]),
-//          to_screen_y(-v[i][Yidx]),
-//          to_screen_x(v[(i + 1) % 3][Xidx]),
-//          to_screen_y(-v[(i + 1) % 3][Yidx]),
-//          0xFF00FF
-//      );
-//    }
   }
 
   fwrite(rawData, PIXEL_SIZE, PIXEL_COUNT, file);

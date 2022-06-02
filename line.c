@@ -37,35 +37,4 @@ void line(UINT32 x0, UINT32 y0, UINT32 x1, UINT32 y1, UINT32 color) {
       setPixel(x, y, color);
     }
   }
-  return;
-
-  // =======
-
-  if (xlength < ylength) {
-    xs = y0;
-    ys = x0;
-    xl = y1;
-    ys = x1;
-    steep = 1;
-  }
-
-  if (xs > xl) {
-    xs = x1;
-    ys = y1;
-    xl = x0;
-    yl = y0;
-  }
-
-  float xlengthf = (float)xl - (float)xs;
-  float ylengthf = (float)yl - (float)ys;
-  for (UINT32 x = xs; x < xl; ++x) {
-    UINT32 y = ys + ylengthf * ((float)(x - xs) / xlengthf);
-
-    if (steep) {
-      setPixel(y, x, color);
-    } else {
-      setPixel(x, y, color);
-    }
-  }
-
 }

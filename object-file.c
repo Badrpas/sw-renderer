@@ -115,5 +115,11 @@ struct obj* read_obj(char* filename) {
   obj->vertex_count = vertex_count;
   obj->faces = faces;
   obj->face_count = face_count;
+
+  // Invert Y axis
+  for (int i = 0; i < vertex_count; ++i) {
+    obj->vertices[i * 3 + 1] = -obj->vertices[i * 3 + 1];
+  }
+
   return obj;
 }

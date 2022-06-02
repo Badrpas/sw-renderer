@@ -1,7 +1,7 @@
 
 #ifndef RENDER_MY_WAY_DEFINES_H
 #define RENDER_MY_WAY_DEFINES_H
-
+#include <stdio.h>
 
 #define BYTE unsigned char
 #define UINT8 unsigned char
@@ -25,12 +25,21 @@ typedef struct Vec {
   double z;
 } Vec;
 
+typedef struct Tec {
+  UINT32 x;
+  UINT32 y;
+} Tec;
+
+Tec* vec_to_tec(Vec*);
+
+
 UINT32 to_screen_x(double x);
 UINT32 to_screen_y(double y);
 
 void setPixel(UINT32, UINT32, UINT32);
 void line(UINT32, UINT32, UINT32, UINT32, UINT32);
-void triangle(Vec*, Vec*, Vec*, UINT32);
+void triangle_t(Tec*, Tec*, Tec*, UINT32);
+void triangle_v(Vec*, Vec*, Vec*, UINT32);
 
 struct obj;
 

@@ -71,8 +71,11 @@ async function execute (p, io, name) {
     io.emit(name + ':stderr', data.toString());
   });
 
-  return new Promise(resolve => {
-    p.on('close', resolve);
+  return new Promise((resolve, reject) => {
+    p.on('close', (code) => {
+      if (code === 0) resolve()
+      else reject(code);
+    });
   }).then(() => io.emit(name + ':end'));
 }
 
@@ -81,14 +84,19 @@ async function run (io) {
   return execute(p, io, 'run');
 }
 
-
 module.exports = async io => {
   let inProgress = false;
   chokidar.watch(['../*.c', '../*.h']).on('change', async () => {
     if (inProgress) return;
     inProgress = true;
 
-    await compile(io);
+    try {
+      await compile(io);
+    } catch (e) {
+      console.error('compile exited with: ', e);
+      inProgress = false;
+      return;
+    }
     await run(io);
 
     io.emit('refresh:out');
